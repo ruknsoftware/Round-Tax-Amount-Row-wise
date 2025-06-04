@@ -112,6 +112,12 @@ app_license = "MIT"
 # 	"ToDo": "custom_app.overrides.CustomToDo"
 # }
 
+from round_tax_amount_row_wise.override.override_doctype_class_having_accounts_controller import (
+	get_override_doctype_class,
+)
+
+override_doctype_class = get_override_doctype_class()
+
 # Document Events
 # ---------------
 # Hook on document methods and events
