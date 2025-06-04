@@ -391,7 +391,7 @@ class calculate_taxes_and_totals:
 			for i, tax in enumerate(self.doc.get("taxes")):
 				# tax_amount represents the amount of tax for the current step
 				current_tax_amount = self.get_current_tax_amount(item, tax, item_tax_map)
-
+				current_tax_amount = flt(current_tax_amount, tax.precision("tax_amount"))
 				# Adjust divisional loss to the last item
 				if tax.charge_type == "Actual":
 					actual_tax_dict[tax.idx] -= current_tax_amount
@@ -507,8 +507,11 @@ class calculate_taxes_and_totals:
 		# store tax breakup for each item
 		key = item.item_code or item.item_name
 		item_wise_tax_amount = current_tax_amount * self.doc.conversion_rate
+		item_wise_tax_amount = flt(item_wise_tax_amount, tax.precision("tax_amount"))
 		if tax.item_wise_tax_detail.get(key):
-			item_wise_tax_amount += tax.item_wise_tax_detail[key][1]
+			item_wise_tax_amount += flt(
+				tax.item_wise_tax_detail[key][1], tax.precision("tax_amount")
+			)
 
 		tax.item_wise_tax_detail[key] = [tax_rate, flt(item_wise_tax_amount)]
 
