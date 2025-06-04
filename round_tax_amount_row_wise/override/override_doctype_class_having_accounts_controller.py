@@ -1,3 +1,5 @@
+import sys
+
 import frappe
 from erpnext.controllers.accounts_controller import AccountsController
 from frappe.installer import update_site_config
@@ -41,4 +43,21 @@ def set_override_doctype_class():
 			] = f"round_tax_amount_row_wise.override.override_doctype_class_having_accounts_controller.{override_class_name}"
 
 	update_site_config("override_doctype_class", override_doctype_class)
+	return override_doctype_class
+
+
+def get_override_doctype_class():
+	override_doctype_class = frappe.get_site_config().get("override_doctype_class")
+	if not override_doctype_class:
+		override_doctype_class = set_override_doctype_class()
+
+	for doctype in override_doctype_class.keys():
+		doctype_class = get_controller(doctype)
+		override_class_name = get_override_doctype_class_name(doctype)
+		if not hasattr(sys.modules[__name__], override_class_name):
+			override_class = type(
+				override_class_name, (CustomAccountControllers, doctype_class), {}
+			)
+			setattr(sys.modules[__name__], override_class_name, override_class)
+
 	return override_doctype_class
