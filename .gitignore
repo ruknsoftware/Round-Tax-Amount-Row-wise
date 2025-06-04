@@ -1,0 +1,7 @@
+.DS_Store
+*.pyc
+*.egg-info
+*.swp
+tags
+round_tax_amount_row_wise/docs/current
+node_modules/
