@@ -29,6 +29,7 @@ def set_override_doctype_class():
 	)
 
 	override_doctype_class = {}
+	original_doctype_class = {}
 
 	for doctype in doctypes:
 		try:
