@@ -41,7 +41,7 @@ def set_override_doctype_class():
 			override_class_name = get_override_doctype_class_name(doctype)
 			override_doctype_class[
 				doctype
-			] = f"round_tax_amount_row_wise.override.override_doctype_class_having_accounts_controller.{override_class_name}"
+			] = f"{sys.modules[__name__]}.{override_class_name}"
 			original_doctype_class[
 				doctype
 			] = f"{doctype_class.__module__}.{doctype_class.__name__}"
