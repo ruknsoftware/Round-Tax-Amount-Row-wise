@@ -55,6 +55,7 @@ def get_override_doctype_class():
 	original_doctype_class = frappe.get_site_config().get("original_doctype_class")
 	if not override_doctype_class:
 		override_doctype_class = set_override_doctype_class()
+		original_doctype_class = frappe.get_site_config().get("original_doctype_class")
 
 	for doctype in override_doctype_class.keys():
 		doctype_class = original_doctype_class[doctype]
