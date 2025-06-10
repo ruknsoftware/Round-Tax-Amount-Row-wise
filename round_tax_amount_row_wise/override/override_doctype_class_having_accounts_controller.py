@@ -63,7 +63,7 @@ def get_override_doctype_class():
 		override_class_name = get_override_doctype_class_name(doctype)
 		if not hasattr(sys.modules[__name__], override_class_name):
 			override_class = type(
-				override_class_name, (doctype_class, CustomAccountControllers), {}
+				override_class_name, (CustomAccountControllers, doctype_class), {}
 			)
 			setattr(sys.modules[__name__], override_class_name, override_class)
 
