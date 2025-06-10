@@ -58,11 +58,12 @@ def get_override_doctype_class():
 		original_doctype_class = frappe.get_site_config().get("original_doctype_class")
 
 	for doctype in override_doctype_class.keys():
-		doctype_class = original_doctype_class[doctype]
+		doctype_class_path = original_doctype_class[doctype]
+		doctype_class = frappe.get_attr(doctype_class_path)
 		override_class_name = get_override_doctype_class_name(doctype)
 		if not hasattr(sys.modules[__name__], override_class_name):
 			override_class = type(
-				override_class_name, (CustomAccountControllers, doctype_class), {}
+				override_class_name, (doctype_class, CustomAccountControllers), {}
 			)
 			setattr(sys.modules[__name__], override_class_name, override_class)
 
