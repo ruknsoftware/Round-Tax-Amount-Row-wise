@@ -41,18 +41,22 @@ def set_override_doctype_class():
 			override_doctype_class[
 				doctype
 			] = f"round_tax_amount_row_wise.override.override_doctype_class_having_accounts_controller.{override_class_name}"
-
+			original_doctype_class[
+				doctype
+			] = doctype_class
 	update_site_config("override_doctype_class", override_doctype_class)
+	update_site_config("original_doctype_class", original_doctype_class)
 	return override_doctype_class
 
 
 def get_override_doctype_class():
 	override_doctype_class = frappe.get_site_config().get("override_doctype_class")
+	original_doctype_class = frappe.get_site_config().get("original_doctype_class")
 	if not override_doctype_class:
 		override_doctype_class = set_override_doctype_class()
 
 	for doctype in override_doctype_class.keys():
-		doctype_class = get_controller(doctype)
+		doctype_class = original_doctype_class[doctype]
 		override_class_name = get_override_doctype_class_name(doctype)
 		if not hasattr(sys.modules[__name__], override_class_name):
 			override_class = type(
