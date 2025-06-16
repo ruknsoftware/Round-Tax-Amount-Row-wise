@@ -39,12 +39,12 @@ def set_override_doctype_class():
 
 		if issubclass(doctype_class, AccountsController):
 			override_class_name = get_override_doctype_class_name(doctype)
-			override_doctype_class[
-				doctype
-			] = f"{sys.modules[__name__].__name__}.{override_class_name}"
-			original_doctype_class[
-				doctype
-			] = f"{doctype_class.__module__}.{doctype_class.__name__}"
+			override_doctype_class[doctype] = (
+				f"{sys.modules[__name__].__name__}.{override_class_name}"
+			)
+			original_doctype_class[doctype] = (
+				f"{doctype_class.__module__}.{doctype_class.__name__}"
+			)
 	update_site_config("override_doctype_class", override_doctype_class)
 	update_site_config("original_doctype_class", original_doctype_class)
 	return override_doctype_class
