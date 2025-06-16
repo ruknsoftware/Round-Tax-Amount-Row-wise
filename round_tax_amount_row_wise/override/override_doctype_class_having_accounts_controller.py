@@ -39,12 +39,12 @@ def set_override_doctype_class():
 
 		if issubclass(doctype_class, AccountsController):
 			override_class_name = get_override_doctype_class_name(doctype)
-			override_doctype_class[
-				doctype
-			] = f"{sys.modules[__name__].__name__}.{override_class_name}"
-			original_doctype_class[
-				doctype
-			] = f"{doctype_class.__module__}.{doctype_class.__name__}"
+			override_doctype_class[doctype] = (
+				f"{sys.modules[__name__].__name__}.{override_class_name}"
+			)
+			original_doctype_class[doctype] = (
+				f"{doctype_class.__module__}.{doctype_class.__name__}"
+			)
 	update_site_config("override_doctype_class", override_doctype_class)
 	update_site_config("original_doctype_class", original_doctype_class)
 	return override_doctype_class
@@ -68,3 +68,20 @@ def get_override_doctype_class():
 			setattr(sys.modules[__name__], override_class_name, override_class)
 
 	return override_doctype_class
+
+	def __getattr__(name):
+		"""
+		Dynamically create and return a custom override class when accessed.
+		If the class already exists, return it instead of creating a new one.
+		"""
+		# Check if class is already defined in the module (important for repeated access)
+		mod = sys.modules[__name__]
+		if hasattr(mod, name):
+			return getattr(mod, name)
+
+		if name.startswith("Custom"):
+			get_override_doctype_class()
+			if hasattr(mod, name):
+				return getattr(mod, name)
+		# If the class does not exist, raise an AttributeError
+		raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
