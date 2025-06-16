@@ -68,7 +68,7 @@ def get_override_doctype_class():
 			setattr(sys.modules[__name__], override_class_name, override_class)
 
 	return override_doctype_class
-	
+
 	def __getattr__(name):
 		"""
 		Dynamically create and return a custom override class when accessed.
@@ -78,10 +78,10 @@ def get_override_doctype_class():
 		mod = sys.modules[__name__]
 		if hasattr(mod, name):
 			return getattr(mod, name)
-	
+
 		if name.startswith("Custom"):
 			get_override_doctype_class()
 			if hasattr(mod, name):
 				return getattr(mod, name)
-		# If the class does not exist, raise an AttributeError	
+		# If the class does not exist, raise an AttributeError
 		raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
