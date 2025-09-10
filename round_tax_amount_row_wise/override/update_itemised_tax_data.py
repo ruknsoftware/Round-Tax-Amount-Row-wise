@@ -57,3 +57,12 @@ def update_itemised_tax_data(doc):
 		row.total_amount = flt(
 			(row.net_amount + row.tax_amount), row.precision("total_amount")
 		)
+		if doc.get("taxes") and any(
+			getattr(t, "included_in_print_rate", 0) for t in doc.get("taxes")
+		):
+			amount = flt(row.amount, row.precision("amount"))
+			row.tax_amount = flt(
+				amount - flt(row.net_amount, row.precision("net_amount")),
+				row.precision("tax_amount"),
+			)
+			row.total_amount = amount
