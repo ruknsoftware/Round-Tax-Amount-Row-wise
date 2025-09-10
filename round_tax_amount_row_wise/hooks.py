@@ -219,3 +219,9 @@ override_doctype_class = get_override_doctype_class()
 # auth_hooks = [
 # 	"round_tax_amount_row_wise.auth.validate"
 # ]
+
+regional_overrides = {
+	"Saudi Arabia": {
+		"erpnext.controllers.taxes_and_totals.update_itemised_tax_data": "round_tax_amount_row_wise.override.update_itemised_tax_data.update_itemised_tax_data"
+	}
+}
