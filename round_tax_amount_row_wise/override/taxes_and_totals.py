@@ -576,7 +576,7 @@ class calculate_taxes_and_totals:
 
 		if self.doc.get("taxes"):
 			self.doc.total_taxes_and_charges = flt(
-				self.doc.grand_total - self.doc.net_total - flt(self.doc.get("grand_total_diff")),
+				self.doc.grand_total - self.doc.net_total,
 				self.doc.precision("total_taxes_and_charges"),
 			)
 		else:
