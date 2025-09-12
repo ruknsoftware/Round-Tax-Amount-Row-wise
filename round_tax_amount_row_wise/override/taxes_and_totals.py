@@ -484,7 +484,11 @@ class calculate_taxes_and_totals:
 			)
 
 		elif tax.charge_type == "On Net Total":
-			current_tax_amount = (tax_rate / 100.0) * item.net_amount
+			if self.tax.included_in_print_rate:
+				net_amount = item.amount / (1 + tax_rate / 100.0)
+				current_tax_amount = item.amount - net_amount
+			else:
+				current_tax_amount = (tax_rate / 100.0) * item.amount
 		elif tax.charge_type == "On Previous Row Amount":
 			current_tax_amount = (tax_rate / 100.0) * self.doc.get("taxes")[
 				cint(tax.row_id) - 1
