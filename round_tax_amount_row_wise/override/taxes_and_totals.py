@@ -484,7 +484,7 @@ class calculate_taxes_and_totals:
 			)
 
 		elif tax.charge_type == "On Net Total":
-			if self.tax.included_in_print_rate:
+			if tax.included_in_print_rate:
 				net_amount = item.amount / (1 + tax_rate / 100.0)
 				current_tax_amount = item.amount - net_amount
 			else:
