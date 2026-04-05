@@ -85,7 +85,7 @@ if (erpnext.taxes_and_totals) {
 
 function is_version_greater_or_equal(current, target) {
 	if (!current) return false;
-	
+
 	// If current is an object (some older Frappe configs stored it as object)
 	if (typeof current === "object" && current.version) {
 		current = current.version;
