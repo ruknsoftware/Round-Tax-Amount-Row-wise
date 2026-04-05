@@ -52,7 +52,7 @@ if (erpnext.taxes_and_totals) {
 		// return [current_net_amount, flt(current_tax_amount, precision("tax_amount", tax))];
 		const erpnext_version = frappe.boot?.versions?.erpnext;
 		// Ensure that the version checked is formatted as semantic version strings
-		if (is_version_greater_or_equal(erpnext_version, "15.10.1")){
+		if (is_version_greater_or_equal(erpnext_version, "15.101")){
 			return [current_net_amount, flt(current_tax_amount, precision("tax_amount", tax))];
 
 		}else {
